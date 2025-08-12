@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historia - Unidad Canina</title>
+    <link rel="stylesheet" href="css/estilo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        background: #f5f7fa;
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+      }
+      .historia-header {
+        background: url('img/fondor.jpg') center/cover no-repeat;
+        color: #fff;
+        text-align: center;
+        padding: 80px 20px 40px 20px;
+        position: relative;
+      }
+      .historia-header::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 32, 0.45);
+        z-index: 0;
+      }
+      .historia-header > * {
+        position: relative;
+        z-index: 1;
+      }
+      .historia-header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5em;
+        letter-spacing: 2px;
+      }
+      .historia-header p {
+        font-size: 1.3rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .timeline {
+        position: relative;
+        margin: 60px auto 40px auto;
+        max-width: 900px;
+        padding: 0 10px;
+      }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #0a2a5c;
+        transform: translateX(-50%);
+      }
+      .timeline-event {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 60px;
+        position: relative;
+      }
+      .timeline-event.left {
+        flex-direction: row;
+      }
+      .timeline-event.right {
+        flex-direction: row-reverse;
+      }
+      .timeline-content,
+      .timeline-img {
+        flex: 1 1 350px;
+        min-width: 280px;
+        max-width: 48%;
+      }
+      .timeline-content {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px #0001;
+        padding: 32px 28px;
+        margin: 0 2%;
+        position: relative;
+        z-index: 2;
+      }
+      .timeline-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 2%;
+      }
+      .timeline-img img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px #0002;
+        border: 4px solid #fff;
+        margin: 0;
+        display: block;
+        transition: transform 0.4s cubic-bezier(0.4, 1.5, 0.5, 1),
+          box-shadow 0.3s, filter 0.3s;
+      }
+      .timeline-img img:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 32px #19458d44;
+        filter: brightness(1.08) contrast(1.08);
+        z-index: 2;
+      }
+      .timeline-date {
+        font-weight: bold;
+        color: #0a2a5c;
+        margin-bottom: 8px;
+        font-size: 1.1em;
+      }
+      @media (max-width: 900px) {
+        .timeline-event,
+        .timeline-event.left,
+        .timeline-event.right {
+          flex-direction: column !important;
+        }
+        .timeline-content,
+        .timeline-img {
+          max-width: 100%;
+          margin: 0 0 18px 0;
+        }
+        .timeline-img img {
+          height: 180px;
+        }
+        .timeline::before {
+          left: 20px;
+        }
+      }
+      .bloques-destacados {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+        margin: 60px auto 40px auto;
+        max-width: 1000px;
+      }
+      .bloque {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px #0001;
+        padding: 32px 24px;
+        flex: 1 1 220px;
+        min-width: 220px;
+        max-width: 300px;
+        text-align: center;
+      }
+      .bloque i {
+        font-size: 2.5em;
+        color: #0a2a5c;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .bloque h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.2em;
+      }
+      .bloque p {
+        margin: 0;
+        font-size: 1em;
+        color: #333;
+      }
+      .testimonios {
+        background: #eaf0fa;
+        padding: 40px 0;
+      }
+      .testimonio {
+        max-width: 600px;
+        margin: 24px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px #0001;
+        padding: 28px 32px;
+        position: relative;
+      }
+      .testimonio:before {
+        content: '“';
+        font-size: 3em;
+        color: #0a2a5c;
+        position: absolute;
+        left: 18px;
+        top: 10px;
+        opacity: 0.2;
+      }
+      .testimonio-cita {
+        font-size: 1.1em;
+        color: #222;
+        margin-bottom: 12px;
+      }
+      .testimonio-autor {
+        font-weight: bold;
+        color: #0a2a5c;
+        font-size: 1em;
+      }
+      footer {
+        background: #0a2a5c;
+        color: #fff;
+        text-align: center;
+        padding: 24px 10px 12px 10px;
+        margin-top: 60px;
+      }
+      footer img {
+        height: 40px;
+        margin: 0 10px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="historia-header animate__animated animate__fadeInDown">
+      <h1>Historia del Centro Regional de Adiestramiento Canino</h1>
+      <p>
+        Reseña hitórica del desarrollo y logros de la Unidad Canina, desde su
+        fundación hasta la actualidad, destacando su impacto en la comunidad
+        y su compromiso con la seguridad y el bienestar social.
+      </p>
+    </header>
+
+    <section class="timeline">
+      <div class="timeline-event left animate__animated animate__fadeInLeft">
+        <div class="timeline-content">
+          <div class="timeline-date">1960</div>
+          <h2>Inicios</h2>
+          <p>
+            Se conforma una Escuadra Canina para e Control del Orden Público, con fines de patrullaje preventivo y seguridad,
+            así como presentaciones de agilidad canina para el deleite de ka ciudadani, especialmente en desfiles cívicos militares, 
+            donde participaba la Policía Nacional en todo el Ecuador
+          </p>
+        </div>
+        <div class="timeline-img">
+          <img src="img/historia1.jpegÑ" alt="Fundación" />
+        </div>
+      </div>
+
+      <div class="timeline-event right animate__animated animate__fadeInRight">
+        <div class="timeline-content">
+          <div class="timeline-date">1969</div>
+          <h2>Primer Curso de entrenamiento de perros policías en Colombia</h2>
+          <p>
+            En el país de Colombia, tres señores Oficiales realizarón el primer curso de entrenamiento de perros policías, 
+            fortaleciendo el programa canino en la Policía Nacional del Ecuador. 
+          </p>
+        </div>
+        <div class="timeline-img">
+          <img src="img/1.png" alt="Entrenamiento" />
+        </div>
+      </div>
+      <div class="timeline-event right animate__animated animate__fadeInRight">
+        <div class="timeline-content">
+          <div class="timeline-date">2002</div>
+          <h2>Primer Reconocimiento Nacional</h2>
+          <p>
+            La unidad recibe su primer reconocimiento por su destacada labor en
+            la comunidad.
+          </p>
+        </div>
+        <div class="timeline-img">
+          <img src="img/Noticia2.jpg" alt="Reconocimiento" />
+        </div>
+      </div>
+      <div class="timeline-event left animate__animated animate__fadeInLeft">
+        <div class="timeline-content">
+          <div class="timeline-date">2010</div>
+          <h2>Modernización y Nuevos Equipos</h2>
+          <p>
+            Se incorporan nuevas tecnologías y se amplía el equipo de trabajo,
+            mejorando la capacidad operativa.
+          </p>
+        </div>
+        <div class="timeline-img">
+          <img src="img/policial2.png" alt="Modernización" />
+        </div>
+      </div>
+      <div class="timeline-event right animate__animated animate__fadeInRight">
+        <div class="timeline-content">
+          <div class="timeline-date">2020</div>
+          <h2>Expansión Regional</h2>
+          <p>
+            La unidad extiende su cobertura a nuevas regiones, incrementando su
+            impacto y presencia.
+          </p>
+        </div>
+        <div class="timeline-img">
+          <img src="img/noticia1.jpg" alt="Expansión" />
+        </div>
+      </div>
+    </section>
+
+    <section class="bloques-destacados">
+      <div class="bloque">
+        <i class="fas fa-dog"></i>
+        <h3>+30 Canes</h3>
+        <p>Entrenados en búsqueda, rescate y detección.</p>
+      </div>
+      <div class="bloque">
+        <i class="fas fa-medal"></i>
+        <h3>10 Reconocimientos</h3>
+        <p>Premios nacionales e internacionales.</p>
+      </div>
+      <div class="bloque">
+        <i class="fas fa-users"></i>
+        <h3>Equipo Humano</h3>
+        <p>Profesionales dedicados y en constante formación.</p>
+      </div>
+    </section>
+
+    <section class="testimonios">
+      <div class="testimonio animate__animated animate__fadeInUp">
+        <div class="testimonio-cita">
+          “Ser parte de la Unidad Canina es un orgullo y una gran
+          responsabilidad. Cada día aprendemos de nuestros compañeros de cuatro
+          patas.”
+        </div>
+        <div class="testimonio-autor">Sargento Juan Pérez, Fundador</div>
+      </div>
+      <div class="testimonio animate__animated animate__fadeInUp">
+        <div class="testimonio-cita">
+          “La dedicación y el trabajo en equipo nos han permitido salvar vidas y
+          servir a la comunidad.”
+        </div>
+        <div class="testimonio-autor">Oficial María Gómez</div>
+      </div>
+    </section>
+
+    <footer>
+      <img src="img/logo-canina.png" alt="Logo Unidad Canina" />
+      <img src="img/logo-policia.png" alt="Logo Policía" />
+      <div style="margin-top: 10px; font-size: 0.95em">
+        &copy; 2025 Unidad Canina. Todos los derechos reservados.
+      </div>
+    </footer>
+
+    <!-- FontAwesome para iconos destacados -->
+    <script
+      src="https://kit.fontawesome.com/7e2e5e6e2a.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

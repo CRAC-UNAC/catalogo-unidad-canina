@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administrador - Unidad Canina</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url('../img/13.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.7rem;
+        animation: fadeInDown 1s;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        animation: fadeIn 1.5s;
+      }
+
+      .btn-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        width: 180px;
+        animation: fadeInUp 2s;
+        z-index: 1;
+        align-items: center;
+        margin-top: 0.3rem;
+      }
+
+      .recuadro-botones {
+        background: rgba(71, 17, 17, 0.542); /* Fondo oscuro con opacidad */
+        border-radius: 20px; /* Bordes redondeados más suaves */
+        padding: 1.2rem 1rem 1.2rem 1rem; /* Menos espacio interno */
+        margin-top: 1.2rem;
+        box-shadow: 0 4px 16px rgba(117, 125, 128, 0.18);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-width: 160px;
+        max-width: 90vw;
+        gap: 1rem; /* Espacio entre los elementos internos */
+      }
+
+      .recuadro-botones img {
+        width: 60px !important;
+        margin-bottom: 0.7rem !important;
+        margin-top: 0.3rem !important;
+      }
+
+      .recuadro-botones h1 {
+        margin-bottom: 0.7rem !important;
+        margin-top: 0 !important;
+      }
+
+      .btn {
+        padding: 0.6rem;
+        font-size: 0.95rem;
+        border: none;
+        border-radius: 8px;
+        background-color: linear-gradient(135deg, #19458d 60%, #a7a9ab 100%);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        color: #1f2c54;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        min-width: 120px;
+        max-width: 200px;
+        box-sizing: border-box;
+      }
+
+      .btn:hover {
+        background-color: #19458d;
+        box-shadow: 0 4px 12px rgba(25, 69, 141, 0.2);
+        color: #ffffff;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.1rem;
+        }
+        .btn-container {
+          width: 98%;
+        }
+        .btn {
+          min-width: unset;
+          max-width: unset;
+        }
+        .recuadro-botones {
+          padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+        }
+        img[alt='Logo Unidad Canina'] {
+          width: 40px !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 100%;
+        height: 100vh;
+      "
+    >
+      <div
+        class="recuadro-botones"
+        style="
+          margin-left: 3vw;
+          margin-top: 5vh;
+          align-items: center;
+          text-align: center;
+        "
+      >
+        <img
+          src="../img/1.png"
+          alt="Logo Unidad Canina"
+          style="
+            width: 110px;
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+            filter: drop-shadow(0 2px 8px #0008);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        />
+        <h1 style="text-align: center; width: 100%">
+          Unidad Nacional Canina<br />CRAC
+        </h1>
+        <div class="btn-container" style="align-items: center">
+          <button class="btn" onclick="location.href='ingresar.html'">
+            📄 Nueva Ficha Técnica
+          </button>
+          <button class="btn" onclick="location.href='ver-fichas.html'">
+            📂 Ver Registros
+          </button>
+          <button class="btn" onclick="abrirModalNoticia()">
+            📰 Crear Noticia
+          </button>
+          <button class="btn" onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para crear noticia -->
+    <div
+      id="modalNoticia"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          color: #222;
+          padding: 2rem;
+          border-radius: 12px;
+          min-width: 300px;
+          max-width: 90vw;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          position: relative;
+        "
+      >
+        <h2 style="margin-top: 0">Crear Noticia</h2>
+        <form
+          id="formNoticia"
+          onsubmit="return enviarNoticia(event)"
+          enctype="multipart/form-data"
+        >
+          <div style="margin-bottom: 1rem">
+            <input
+              type="text"
+              id="tituloNoticia"
+              name="titulo"
+              placeholder="Título"
+              required
+              style="
+                width: 100%;
+                padding: 0.5rem;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 1rem">
+            <textarea
+              id="contenidoNoticia"
+              name="contenido"
+              placeholder="Contenido de la noticia"
+              required
+              rows="5"
+              style="
+                width: 100%;
+                padding: 0.5rem;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+              "
+            ></textarea>
+          </div>
+          <div style="margin-bottom: 1rem">
+            <input
+              type="file"
+              id="imagenNoticia"
+              name="imagen"
+              accept="image/*"
+              required
+              style="width: 100%"
+            />
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 1rem">
+            <button
+              type="button"
+              onclick="cerrarModalNoticia()"
+              style="
+                background: #ccc;
+                color: #222;
+                border: none;
+                border-radius: 6px;
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+              "
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              style="
+                background: #19458d;
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+              "
+            >
+              Publicar
+            </button>
+          </div>
+        </form>
+        <button
+          onclick="cerrarModalNoticia()"
+          style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function cerrarSesion() {
+        alert('Sesión cerrada');
+        window.location.href = 'login.html';
+      }
+
+      function abrirModalNoticia() {
+        document.getElementById('modalNoticia').style.display = 'flex';
+      }
+      function cerrarModalNoticia() {
+        document.getElementById('modalNoticia').style.display = 'none';
+      }
+      async function enviarNoticia(event) {
+        event.preventDefault();
+        const form = document.getElementById('formNoticia');
+        const formData = new FormData(form);
+        const titulo = formData.get('titulo').trim();
+        const contenido = formData.get('contenido').trim();
+        const imagen = document.getElementById('imagenNoticia').files[0];
+        if (!titulo || !contenido || !imagen) {
+          alert('Por favor, completa todos los campos e incluye una imagen.');
+          return false;
+        }
+        try {
+          const resp = await fetch('http://localhost:3000/api/noticias', {
+            method: 'POST',
+            body: formData,
+          });
+          if (resp.ok) {
+            alert('Noticia publicada correctamente.');
+            cerrarModalNoticia();
+            form.reset();
+          } else {
+            const data = await resp.json();
+            alert(
+              'Error: ' + (data.error || 'No se pudo publicar la noticia.')
+            );
+          }
+        } catch (err) {
+          alert('Error de conexión al servidor.');
+        }
+        return false;
+      }
+    </script>
+  </body>
+</html>
+

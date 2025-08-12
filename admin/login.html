@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingreso - Unidad Canina</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        overflow: hidden;
+        padding-left: 4%;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url('../img/fondor.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        opacity: 0.65;
+      }
+
+      .card {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(25, 69, 141, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 2.5rem 2rem 2rem 2rem;
+        width: 370px;
+        max-width: 95vw;
+        min-width: 0;
+        box-sizing: border-box;
+        box-shadow: 0 12px 32px rgba(255, 255, 255, 0.25);
+        text-align: center;
+        border: 3px solid #00000089;
+        animation-delay: 0.2s;
+      }
+
+      @media (max-width: 900px) {
+        body {
+          padding-left: 0;
+          justify-content: center;
+          align-items: center;
+        }
+        .card {
+          width: 90vw;
+          max-width: 400px;
+          min-width: 300px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+        }
+        .card {
+          width: 90vw;
+          max-width: 350px;
+          min-width: 280px;
+          padding: 1.5rem 1rem;
+          font-size: 0.95rem;
+          margin: 0;
+        }
+
+        .card img {
+          width: 100px !important;
+          height: 100px !important;
+        }
+
+        h2 {
+          font-size: 1.5rem !important;
+        }
+      }
+
+      .card img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border-radius: 50%;
+        border: 3px solid #19458d;
+        background: #a7a9ab;
+        box-shadow: 0 4px 16px rgba(25, 69, 141, 0.12);
+        transition: transform 0.3s ease;
+      }
+
+      .card img:hover {
+        transform: scale(1.05);
+      }
+
+      h2 {
+        margin-bottom: 1rem;
+        color: #0f0949;
+        font-weight: bold;
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+
+      input[type='text'],
+      input[type='password'] {
+        width: calc(100% - 1.4rem);
+        padding: 0.7rem;
+        margin: 0.5rem 0;
+        border: 2px solid #19458d;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: #06065b72;
+        transition: border 0.3s, box-shadow 0.3s;
+        box-sizing: border-box;
+      }
+
+      input[type='text']:focus,
+      input[type='password']:focus {
+        border: 2px solid #e8e8e8;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(26, 10, 171, 0.415);
+      }
+
+      button {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: #ffce01;
+        color: #19458d;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 8px rgba(25, 69, 141, 0.08);
+        transition: background 0.3s, color 0.3s, transform 0.2s;
+        margin-top: 1rem;
+      }
+
+      button:hover {
+        background-color: #19458d;
+        color: #ffce01;
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .registrarse {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: #19458d;
+      }
+
+      .registrarse a {
+        color: #ff9e15;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      .registrarse a:hover {
+        text-decoration: underline;
+        color: #19458d;
+      }
+
+      .error-message {
+        color: #e30513;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      .success-message {
+        color: #19458d;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card animate__animated animate__fadeIn">
+      <img
+        id="perrito"
+        src="https://i.pinimg.com/originals/ff/a2/02/ffa2024fe24874ba7627a90769c76270.gif"
+        alt="Perrito"
+      />
+      <h2>Bienvenido</h2>
+      <form id="loginForm">
+        <input type="text" id="usuario" placeholder="Usuario" required />
+        <input type="password" id="clave" placeholder="Contraseña" required />
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+        <button type="submit">Ingresar</button>
+      </form>
+      <div class="registrarse">
+        ¿No estás registrado? <a href="registro.html">Regístrate aquí</a>
+      </div>
+    </div>
+
+    <script>
+      const ojosAbiertos =
+        'https://i.pinimg.com/originals/ff/a2/02/ffa2024fe24874ba7627a90769c76270.gif';
+      const ojosTapados =
+        'https://i.pinimg.com/originals/3f/3b/b6/3f3bb646a77c4395662716a2e7927b6c.gif';
+
+      const perrito = document.getElementById('perrito');
+      const clave = document.getElementById('clave');
+      const usuario = document.getElementById('usuario');
+      const loginForm = document.getElementById('loginForm');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      function taparOjos() {
+        perrito.src = ojosTapados;
+      }
+
+      function abrirOjos() {
+        perrito.src = ojosAbiertos;
+      }
+
+      clave.addEventListener('focus', taparOjos);
+      clave.addEventListener('blur', abrirOjos);
+      clave.addEventListener('input', taparOjos);
+
+      function mostrarMensaje(mensaje, tipo) {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        if (tipo === 'error') {
+          errorMessage.textContent = mensaje;
+          errorMessage.style.display = 'block';
+        } else if (tipo === 'success') {
+          successMessage.textContent = mensaje;
+          successMessage.style.display = 'block';
+        }
+
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+          successMessage.style.display = 'none';
+        }, 5000);
+      }
+
+      loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const usuarioValue = usuario.value.trim();
+        const claveValue = clave.value.trim();
+
+        fetch('http://localhost:3001/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ usuario: usuarioValue, clave: claveValue }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.token) {
+              localStorage.setItem('token', data.token); // Guarda el token
+              mostrarMensaje('¡Ingreso exitoso! Redirigiendo...', 'success');
+              setTimeout(() => {
+                window.location.href = 'dashboard.html';
+              }, 1500);
+            } else {
+              mostrarMensaje(data.error || 'Error al iniciar sesión', 'error');
+            }
+          })
+          .catch((error) => {
+            console.error('Error en la solicitud:', error);
+            mostrarMensaje('Error al conectar con el servidor', 'error');
+          });
+      });
+
+      usuario.addEventListener('input', function () {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+      });
+
+      clave.addEventListener('input', function () {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+      });
+
+      usuario.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') clave.focus();
+      });
+
+      clave.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') loginForm.dispatchEvent(new Event('submit'));
+      });
+    </script>
+  </body>
+</html>

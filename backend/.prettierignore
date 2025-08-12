@@ -1,0 +1,4 @@
+# Archivos a ignorar por Prettier
+node_modules
+package-lock.json
+.env

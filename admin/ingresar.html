@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingreso de Ficha Técnica - Unidad Canina</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="../css/estilo.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        background: url('../img/3.jpg') center center/cover no-repeat fixed;
+        animation: fondoZoom 18s ease-in-out infinite alternate;
+        position: relative;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: linear-gradient(120deg, #a7a9ab82 0%, #19458da6 100%);
+        /* Película azul oscuro translúcida */
+        opacity: 0.82;
+        transition: opacity 0.5s;
+      }
+      @keyframes fondoZoom {
+        0% {
+          background-size: 100% 100%, cover;
+        }
+        100% {
+          background-size: 110% 110%, cover;
+        }
+      }
+      /* Header glassmorphism */
+      .header-glass {
+        background: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 1.5rem;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        margin-bottom: 2.5rem;
+        padding: 1.2rem 2.5rem 1.2rem 2.5rem;
+        animation: fadeInDown 1.2s;
+      }
+      .header-glass .logo-admin {
+        width: 54px;
+        height: 54px;
+        object-fit: contain;
+        margin-right: 1.2rem;
+        filter: drop-shadow(0 2px 8px #04254d55);
+      }
+      .header-glass .titulo-header {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-weight: 900;
+        font-size: 2.1rem;
+        color: #ffffff; /* Titulo Panel de Administración */
+        letter-spacing: 2px;
+        text-shadow: 0 2px 8px #1b1002bf;
+        margin-bottom: 0;
+      }
+      .header-glass .subtitulo-header {
+        font-size: 1.1rem;
+        color: #ff9e15; /* Subtitulo Ingreso de Ficha Técnica */
+        font-weight: 500;
+        margin-top: 0.2rem;
+        letter-spacing: 1px;
+      }
+      .card-form {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 1.2rem;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        padding: 2.5rem 2rem 2rem 2rem;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInDown 1s;
+        position: relative;
+        z-index: 2;
+      }
+      /* Loader animado */
+      .loader {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 10;
+        border-radius: 1.2rem;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .loader.show {
+        display: flex;
+        animation: fadeIn 0.5s;
+      }
+      .loader .spinner {
+        border: 5px solid #b0c4de;
+        border-top: 5px solid #f9d423;
+        border-radius: 50%;
+        width: 54px;
+        height: 54px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .loader .loader-text {
+        color: #1a3557;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+      }
+      .form-label {
+        font-weight: 600;
+        color: #1a3557;
+        transition: color 0.3s;
+      }
+      .form-label.focused {
+        color: #f9d423;
+      }
+      .form-select,
+      .form-control {
+        border-radius: 0.7rem;
+        border: 1.5px solid #b0c4de;
+        transition: box-shadow 0.3s;
+      }
+      .form-select:focus,
+      .form-control:focus {
+        box-shadow: 0 0 0 2px #04023b;
+        border-color: #383b3c;
+        animation: pulseSelect 0.5s;
+      }
+
+      .form-select.animated,
+      .form-control.animated {
+        animation: pulseSelect 0.5s;
+      }
+
+      @keyframes pulseSelect {
+        0% {
+          box-shadow: 0 0 0 0 #f9d42355;
+        }
+        70% {
+          box-shadow: 0 0 0 10px #2c536444;
+        }
+        100% {
+          box-shadow: 0 0 0 2px #2c5364;
+        }
+      }
+      .btn-primary {
+        background: linear-gradient(90deg, #1a3557 0%, #2c5364 100%);
+        border: none;
+        border-radius: 2rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #fff;
+        box-shadow: 0 2px 12px #1a355755;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.3s, color 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background: linear-gradient(90deg, #f9d423 0%, #ff4e50 100%);
+        color: #1a3557;
+        box-shadow: 0 4px 24px #f9d42355, 0 2px 12px #ff4e5055;
+        transform: scale(1.07) rotate(-1deg);
+        animation: pulseBtn 0.5s;
+      }
+      .btn-primary:active {
+        background: linear-gradient(90deg, #ff4e50 0%, #f9d423 100%);
+        color: #fff;
+        transform: scale(0.98);
+      }
+      .btn-secondary {
+        border-radius: 2rem;
+        background: linear-gradient(90deg, #b0c4de 0%, #f9d423 100%);
+        color: #1a3557;
+        font-weight: 600;
+        border: none;
+        transition: background 0.3s, color 0.3s, transform 0.2s;
+      }
+      .btn-secondary:hover,
+      .btn-secondary:focus {
+        background: linear-gradient(90deg, #ff4e50 0%, #b0c4de 100%);
+        color: #fff;
+        transform: scale(1.07) rotate(1deg);
+        animation: pulseBtn 0.5s;
+      }
+      .btn-secondary:active {
+        background: linear-gradient(90deg, #f9d423 0%, #ff4e50 100%);
+        color: #1a3557;
+        transform: scale(0.98);
+      }
+      @keyframes pulseBtn {
+        0% {
+          box-shadow: 0 0 0 0 #f9d42355;
+        }
+        70% {
+          box-shadow: 0 0 0 10px #ff4e5044;
+        }
+        100% {
+          box-shadow: 0 2px 12px #1a355755;
+        }
+      }
+      .titulo-animado {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-weight: 800;
+        color: #1a3557;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 8px #b0c4de44;
+      }
+      .icono-form {
+        font-size: 2.2rem;
+        color: #2c5364;
+        margin-bottom: 0.5rem;
+      }
+      .alert-custom {
+        border-radius: 1rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        box-shadow: 0 2px 12px #2c536422;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-4">
+      <div
+        class="header-glass d-flex align-items-center animate__animated animate__fadeInDown"
+      >
+        <img
+          src="../img/logo-canina.png"
+          alt="Logo Unidad Canina"
+          class="logo-admin d-none d-md-block"
+        />
+        <div>
+          <div class="titulo-header">Panel de Administración</div>
+          <div class="subtitulo-header">Ingreso de Ficha Técnica</div>
+        </div>
+      </div>
+      <div
+        class="card-form animate__animated animate__fadeInDown position-relative"
+      >
+        <div class="loader" id="loader-ficha">
+          <div class="spinner"></div>
+          <div class="loader-text">Guardando ficha...</div>
+        </div>
+        <div class="text-center mb-3">
+          <i class="bi bi-clipboard2-data icono-form"></i>
+        </div>
+        <h2
+          class="mb-4 text-center titulo-animado animate__animated animate__fadeIn"
+        >
+          Ingreso de Ficha Técnica
+        </h2>
+        <div class="mb-4 row g-2">
+          <div class="col-md-4">
+            <label for="categoriaFicha" class="form-label">
+              <i class="bi bi-diagram-3"></i> Categoría principal
+            </label>
+            <select id="categoriaFicha" class="form-select" required>
+              <option value="">Seleccione...</option>
+              <option value="canes">Canes Biológicos</option>
+              <option value="logistica">Logística</option>
+              <option value="activos">Activos Fijos</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="subcategoriaFicha" class="form-label"
+              ><i class="bi bi-layers"></i> Subcategoría</label
+            >
+            <select
+              id="subcategoriaFicha"
+              class="form-select"
+              required
+              disabled
+            >
+              <option value="">Seleccione...</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="tipoFicha" class="form-label"
+              ><i class="bi bi-list-ul"></i> Tipo</label
+            >
+            <select id="tipoFicha" class="form-select" required disabled>
+              <option value="">Seleccione...</option>
+            </select>
+          </div>
+        </div>
+        <div id="alerta-ficha" style="display: none"></div>
+        <form
+          id="form-ficha"
+          enctype="multipart/form-data"
+          style="display: none"
+        ></form>
+      </div>
+    </div>
+    <script>
+      // Campos para Canes Antidrogas
+      const camposCanesAntidrogas = [
+        { label: 'Razas Requeridas', name: 'razas_requeridas', type: 'text' },
+        {
+          label: 'Edad Requerida (meses)',
+          name: 'edad_requerida',
+          type: 'text',
+        },
+        {
+          label: 'Características Requeridas',
+          name: 'caracteristicas_requeridas',
+          type: 'text',
+        },
+        {
+          label: 'Documentos de Identidad',
+          name: 'documentos_identidad',
+          type: 'text',
+        },
+        {
+          label: 'Requerimiento Veterinario',
+          name: 'requerimiento_veterinario',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Campos para Canes de Control del Orden
+      const camposCanesControlOrden = [
+        { label: 'Razas Requeridas', name: 'razas_requeridas', type: 'text' },
+        {
+          label: 'Edad Requerida (meses)',
+          name: 'edad_requerida',
+          type: 'text',
+        },
+        {
+          label: 'Características Requeridas',
+          name: 'caracteristicas_requeridas',
+          type: 'text',
+        },
+        {
+          label: 'Documentos de Identidad',
+          name: 'documentos_identidad',
+          type: 'text',
+        },
+        {
+          label: 'Requerimiento Veterinario',
+          name: 'requerimiento_veterinario',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Campos para Canes de Busqueda de Personas y Restos Humanos
+      const camposCanesBusqueda = [
+        { label: 'Razas Requeridas', name: 'razas_requeridas', type: 'text' },
+        {
+          label: 'Edad Requerida (meses)',
+          name: 'edad_requerida',
+          type: 'text',
+        },
+        {
+          label: 'Características Requeridas',
+          name: 'caracteristicas_requeridas',
+          type: 'text',
+        },
+        {
+          label: 'Documentos de Identidad',
+          name: 'documentos_identidad',
+          type: 'text',
+        },
+        {
+          label: 'Requerimiento Veterinario',
+          name: 'requerimiento_veterinario',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Campos para Canes de Relaciones Públicas y Agilidad Canina
+      const camposCanesRelPublicas = [
+        { label: 'Razas Requeridas', name: 'razas_requeridas', type: 'text' },
+        {
+          label: 'Edad Requerida (meses)',
+          name: 'edad_requerida',
+          type: 'text',
+        },
+        {
+          label: 'Características Requeridas',
+          name: 'caracteristicas_requeridas',
+          type: 'text',
+        },
+        {
+          label: 'Documentos de Identidad',
+          name: 'documentos_identidad',
+          type: 'text',
+        },
+        {
+          label: 'Requerimiento Veterinario',
+          name: 'requerimiento_veterinario',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Campos para Canes de Terapia Asistida
+      const camposCanesTerapia = [
+        { label: 'Razas Requeridas', name: 'razas_requeridas', type: 'text' },
+        {
+          label: 'Edad Requerida (meses)',
+          name: 'edad_requerida',
+          type: 'text',
+        },
+        {
+          label: 'Características Requeridas',
+          name: 'caracteristicas_requeridas',
+          type: 'text',
+        },
+        {
+          label: 'Documentos de Identidad',
+          name: 'documentos_identidad',
+          type: 'text',
+        },
+        {
+          label: 'Requerimiento Veterinario',
+          name: 'requerimiento_veterinario',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Campos para Camiones
+      const camposCamiones = [
+        {
+          label: 'Capacidad carga eje delantero (kg)',
+          name: 'capacidad_carga_eje_delantero',
+          type: 'number',
+        },
+        {
+          label: 'Capacidad carga eje trasero (kg)',
+          name: 'capacidad_carga_eje_trasero',
+          type: 'number',
+        },
+        { label: 'Peso bruto (kg)', name: 'peso_bruto', type: 'number' },
+        { label: 'Peso vacio (kg)', name: 'peso_vacio', type: 'number' },
+        {
+          label: 'Capacidad de carga (kg)',
+          name: 'capacidad_carga',
+          type: 'number',
+        },
+        { label: 'Neumáticos', name: 'neumaticos', type: 'text' },
+        { label: 'Tipo', name: 'tipo', type: 'text' },
+        {
+          label: 'Sistema de inyección',
+          name: 'sistema_inyeccion',
+          type: 'text',
+        },
+        {
+          label: 'Norma de control de emisiones',
+          name: 'norma_control_emisiones',
+          type: 'text',
+        },
+        { label: 'Potencia máxima', name: 'potencia_maxima', type: 'text' },
+        { label: 'Torque máximo', name: 'torque_maximo', type: 'text' },
+        { label: 'Cilindraje', name: 'cilindraje', type: 'text' },
+        { label: 'Transmisión / Tipo', name: 'transmision_tipo', type: 'text' },
+        {
+          label: 'Número de velocidades',
+          name: 'numero_velocidades',
+          type: 'text',
+        },
+        { label: 'Eje Delantero', name: 'eje_delantero', type: 'text' },
+        { label: 'Eje Trasero', name: 'eje_trasero', type: 'text' },
+        {
+          label: 'Suspensión Delantera',
+          name: 'suspension_delantera',
+          type: 'text',
+        },
+        {
+          label: 'Suspensión Trasera',
+          name: 'suspension_trasera',
+          type: 'text',
+        },
+        { label: 'Dirección', name: 'direccion', type: 'text' },
+        { label: 'Frenos de Servicio', name: 'frenos_servicio', type: 'text' },
+        { label: 'Sistema de Control', name: 'sistema_control', type: 'text' },
+        {
+          label: 'Frenos de Estacionamiento',
+          name: 'frenos_estacionamiento',
+          type: 'text',
+        },
+        { label: 'Frenos de Motor', name: 'frenos_motor', type: 'text' },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Campos para Camioneta
+      const camposCamioneta = [
+        {
+          label: 'DIMENSIONES /ALTO TOTAL MM',
+          name: 'alto_total_mm',
+          type: 'number',
+        },
+        {
+          label: 'DIMENSIONES/ANCHO TOTAL MM',
+          name: 'ancho_total_mm',
+          type: 'number',
+        },
+        {
+          label: 'DIMENSIONES/DISTANCIA ENTRE EJES MM',
+          name: 'distancia_ejes_mm',
+          type: 'number',
+        },
+        {
+          label: 'DIMENSIONES/LARGO TOTAL MM',
+          name: 'largo_total_mm',
+          type: 'number',
+        },
+        { label: 'DIRECCIÓN / TIPO', name: 'direccion_tipo', type: 'text' },
+        {
+          label: 'EQUIPAMIENTO / SENSORES DE PRESIÓN DE AIRE EN LLANTAS',
+          name: 'sensores_presion_llantas',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO /AIRE ACONDICIONADO SI/NO',
+          name: 'aire_acondicionado',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO /RADIO CON PANTALLA TÁCTIL',
+          name: 'radio_pantalla',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO /VOLANTE MULTIFUNCIÓN',
+          name: 'volante_multifuncion',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/ALARMA DE FABRICA',
+          name: 'alarma_fabrica',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/ASIENTOS DE ECOCUERO',
+          name: 'asientos_ecocuero',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/BARRA DE TIRO',
+          name: 'barra_tiro',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/NEBLINEROS DELANTEROS',
+          name: 'neblineros_delanteros',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/RECUBRIMIENTO DE BALDE',
+          name: 'recubrimiento_balde',
+          type: 'text',
+        },
+        { label: 'EQUIPAMIENTO/ROLL BAR', name: 'roll_bar', type: 'text' },
+        {
+          label: 'EQUIPAMIENTO/VELOCIDAD DE CRUCERO',
+          name: 'velocidad_crucero',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/VIDRIOS Y RETROVISORES ELÉCTRICOS',
+          name: 'vidrios_retrovisores_electricos',
+          type: 'text',
+        },
+        {
+          label: 'ESPECIFICACIONES GENERALES/COLOR ESPECIFICAR',
+          name: 'color',
+          type: 'text',
+        },
+        {
+          label: 'ESPECIFICACIONES GENERALES/NÚMERO DE PASAJEROS ESPECIFICAR',
+          name: 'num_pasajeros',
+          type: 'number',
+        },
+        { label: 'FABRICANTE', name: 'fabricante', type: 'text' },
+        {
+          label: 'FRENOS / DELANTEROS',
+          name: 'frenos_delanteros',
+          type: 'text',
+        },
+        { label: 'FRENOS / TIPO', name: 'frenos_tipo', type: 'text' },
+        {
+          label: 'FRENOS/ POSTERIORES',
+          name: 'frenos_posteriores',
+          type: 'text',
+        },
+        {
+          label: 'GARANTÍA EN KILÓMETROS Y AÑOS',
+          name: 'garantia',
+          type: 'text',
+        },
+        { label: 'INMO/MARCHAS', name: 'marchas', type: 'text' },
+        { label: 'INMO/TIPO', name: 'inmo_tipo', type: 'text' },
+        { label: 'INMO/TRACCIÓN', name: 'inmo_traccion', type: 'text' },
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        { label: 'MOTOR / TIPO', name: 'motor_tipo', type: 'text' },
+        {
+          label: 'MOTOR/ POTENCIA HP/RPM',
+          name: 'motor_potencia',
+          type: 'text',
+        },
+        { label: 'MOTOR/CILINDRADA', name: 'motor_cilindrada', type: 'text' },
+        { label: 'MOTOR/COMBUSTIBLE', name: 'motor_combustible', type: 'text' },
+        {
+          label: 'MOTOR/SISTEMA DE VÁLVULAS',
+          name: 'motor_valvulas',
+          type: 'text',
+        },
+        { label: 'MOTOR/TORQUE KGM/RPM', name: 'motor_torque', type: 'text' },
+        { label: 'SEGURIDAD', name: 'seguridad', type: 'text' },
+        {
+          label: 'SUSPENSIÓN / AMORTIGUADORES',
+          name: 'suspension_amortiguadores',
+          type: 'text',
+        },
+        {
+          label: 'SUSPENSIÓN / NEUMÁTICO',
+          name: 'suspension_neumatico',
+          type: 'text',
+        },
+        {
+          label: 'SUSPENSIÓN / POSTERIOR',
+          name: 'suspension_posterior',
+          type: 'text',
+        },
+        {
+          label: 'SUSPENSIÓN/ DELANTERA',
+          name: 'suspension_delantera',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+      // Base para Furgoneta (puedes agregar campos luego)
+      const camposFurgoneta = [
+        {
+          label: 'DIMENSIONES /ALTO TOTAL MM',
+          name: 'alto_total_mm',
+          type: 'number',
+        },
+        {
+          label: 'DIMENSIONES/ANCHO TOTAL MM',
+          name: 'ancho_total_mm',
+          type: 'number',
+        },
+        {
+          label: 'DIMENSIONES/DISTANCIA ENTRE EJES MM',
+          name: 'distancia_ejes_mm',
+          type: 'number',
+        },
+        {
+          label: 'DIMENSIONES/LARGO TOTAL MM',
+          name: 'largo_total_mm',
+          type: 'number',
+        },
+        { label: 'DIRECCIÓN / TIPO', name: 'direccion_tipo', type: 'text' },
+        {
+          label: 'EQUIPAMIENTO / SENSORES DE PRESIÓN DE AIRE EN LLANTAS',
+          name: 'sensores_presion_llantas',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO /AIRE ACONDICIONADO SI/NO',
+          name: 'aire_acondicionado',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO /RADIO CON PANTALLA TÁCTIL',
+          name: 'radio_pantalla',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO /VOLANTE MULTIFUNCIÓN',
+          name: 'volante_multifuncion',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/ALARMA DE FABRICA',
+          name: 'alarma_fabrica',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/ASIENTOS DE ECOCUERO',
+          name: 'asientos_ecocuero',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/BARRA DE TIRO',
+          name: 'barra_tiro',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/NEBLINEROS DELANTEROS',
+          name: 'neblineros_delanteros',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/RECUBRIMIENTO DE BALDE',
+          name: 'recubrimiento_balde',
+          type: 'text',
+        },
+        { label: 'EQUIPAMIENTO/ROLL BAR', name: 'roll_bar', type: 'text' },
+        {
+          label: 'EQUIPAMIENTO/VELOCIDAD DE CRUCERO',
+          name: 'velocidad_crucero',
+          type: 'text',
+        },
+        {
+          label: 'EQUIPAMIENTO/VIDRIOS Y RETROVISORES ELÉCTRICOS',
+          name: 'vidrios_retrovisores_electricos',
+          type: 'text',
+        },
+        {
+          label: 'ESPECIFICACIONES GENERALES/COLOR ESPECIFICAR',
+          name: 'color',
+          type: 'text',
+        },
+        {
+          label: 'ESPECIFICACIONES GENERALES/NÚMERO DE PASAJEROS ESPECIFICAR',
+          name: 'num_pasajeros',
+          type: 'number',
+        },
+        { label: 'FABRICANTE', name: 'fabricante', type: 'text' },
+        {
+          label: 'FRENOS / DELANTEROS',
+          name: 'frenos_delanteros',
+          type: 'text',
+        },
+        { label: 'FRENOS / TIPO', name: 'frenos_tipo', type: 'text' },
+        {
+          label: 'FRENOS/ POSTERIORES',
+          name: 'frenos_posteriores',
+          type: 'text',
+        },
+        {
+          label: 'GARANTÍA EN KILÓMETROS Y AÑOS',
+          name: 'garantia',
+          type: 'text',
+        },
+        { label: 'INMO/MARCHAS', name: 'marchas', type: 'text' },
+        { label: 'INMO/TIPO', name: 'inmo_tipo', type: 'text' },
+        { label: 'INMO/TRACCIÓN', name: 'inmo_traccion', type: 'text' },
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        { label: 'MOTOR / TIPO', name: 'motor_tipo', type: 'text' },
+        {
+          label: 'MOTOR/ POTENCIA HP/RPM',
+          name: 'motor_potencia',
+          type: 'text',
+        },
+        { label: 'MOTOR/CILINDRADA', name: 'motor_cilindrada', type: 'text' },
+        { label: 'MOTOR/COMBUSTIBLE', name: 'motor_combustible', type: 'text' },
+        {
+          label: 'MOTOR/SISTEMA DE VÁLVULAS',
+          name: 'motor_valvulas',
+          type: 'text',
+        },
+        { label: 'MOTOR/TORQUE KGM/RPM', name: 'motor_torque', type: 'text' },
+        { label: 'SEGURIDAD', name: 'seguridad', type: 'text' },
+        {
+          label: 'SUSPENSIÓN / AMORTIGUADORES',
+          name: 'suspension_amortiguadores',
+          type: 'text',
+        },
+        {
+          label: 'SUSPENSIÓN / NEUMÁTICO',
+          name: 'suspension_neumatico',
+          type: 'text',
+        },
+        {
+          label: 'SUSPENSIÓN / POSTERIOR',
+          name: 'suspension_posterior',
+          type: 'text',
+        },
+        {
+          label: 'SUSPENSIÓN/ DELANTERA',
+          name: 'suspension_delantera',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // Base para Muebles de Oficina
+      const camposMueblesOficina = [
+        { label: 'MATERIAL', name: 'material', type: 'text' },
+        { label: 'DIMENSIONES', name: 'dimensiones', type: 'text' },
+        { label: 'COLOR', name: 'color', type: 'text' },
+        { label: 'PESO', name: 'peso', type: 'text' },
+        { label: 'GARANTÍA', name: 'garantia', type: 'text' },
+        { label: 'IMAGEN', name: 'imagen', type: 'file' },
+      ];
+
+      // Base para Muebles de Dormitorio
+      const camposMueblesDormitorio = [
+        { label: 'MATERIAL', name: 'material', type: 'text' },
+        { label: 'DIMENSIONES', name: 'dimensiones', type: 'text' },
+        { label: 'COLOR', name: 'color', type: 'text' },
+        { label: 'PESO', name: 'peso', type: 'text' },
+        { label: 'GARANTÍA', name: 'garantia', type: 'text' },
+        { label: 'IMAGEN', name: 'imagen', type: 'file' },
+      ];
+
+      // Base para Computadores de Escritorio
+      const camposComputadoresEscritorio = [
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'CERTIFICADOS', name: 'certificados', type: 'text' },
+        { label: 'CHASIS / CASE TAMAÑO', name: 'chasis_tamano', type: 'text' },
+        { label: 'CHASIS / CASE COLOR', name: 'chasis_color', type: 'text' },
+        { label: 'EQUIPO', name: 'equipo', type: 'text' },
+        { label: 'FABRICANTE', name: 'fabricante', type: 'text' },
+        {
+          label: 'FUENTE DE ENERGÍA / VOLTAJE V',
+          name: 'fuente_energia',
+          type: 'text',
+        },
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        {
+          label: 'MEMORIA RAM INSTALADA MÍNIMA',
+          name: 'memoria_ram',
+          type: 'text',
+        },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        {
+          label: 'MODELO DE PROCESADOR',
+          name: 'modelo_procesador',
+          type: 'text',
+        },
+        {
+          label: 'MONITOR / ENTRADAS DE VIDEO',
+          name: 'monitor_entradas_video',
+          type: 'text',
+        },
+        {
+          label: 'MONITOR / TAMAÑO EN PULGADAS',
+          name: 'monitor_tamano',
+          type: 'text',
+        },
+        {
+          label: 'MONITOR / TIPO DE PANTALLA',
+          name: 'monitor_tipo_pantalla',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / CANTIDAD DE RANURAS RAM DDR4',
+          name: 'motherboard_ranuras_ram_ddr4',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / CHIPSET',
+          name: 'motherboard_chipset',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / MEMORIA RAM EXPANDIBLE',
+          name: 'motherboard_memoria_ram_expandible',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / PUERTOS FUNCIONALES, AL MENOS LOS SIGUIENTES',
+          name: 'motherboard_puertos_funcionales',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / RED/LAN',
+          name: 'motherboard_red_lan',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / SEGURIDAD',
+          name: 'motherboard_seguridad',
+          type: 'text',
+        },
+        {
+          label: 'MOUSE / INTERFAZ Y TIPO',
+          name: 'mouse_interfaz_tipo',
+          type: 'text',
+        },
+        { label: 'NOTA 1', name: 'nota_1', type: 'text' },
+        { label: 'PROCESADOR', name: 'procesador', type: 'text' },
+        {
+          label: 'PROCESADOR / FRECUENCIA TURBO MAX.',
+          name: 'procesador_frecuencia_turbo_max',
+          type: 'text',
+        },
+        {
+          label: 'PROCESADOR / MEMORIA CACHÉ',
+          name: 'procesador_memoria_cache',
+          type: 'text',
+        },
+        {
+          label: 'PROCESADOR / NÚMERO DE HILOS O SUBPROCESOS',
+          name: 'procesador_numero_hilos_subprocesos',
+          type: 'text',
+        },
+        {
+          label: 'PROCESADOR / NÚMERO DE NÚCLEOS',
+          name: 'procesador_numero_nucleos',
+          type: 'text',
+        },
+        {
+          label: 'SISTEMA OPERATIVO / SOFTWARE LICENCIADO',
+          name: 'sistema_operativo_software_licenciado',
+          type: 'text',
+        },
+        {
+          label: 'TECLADO / INTERFAZ E IDIOMA',
+          name: 'teclado_interfaz_idioma',
+          type: 'text',
+        },
+        { label: 'TECLADO / TAMAÑO', name: 'teclado_tamano', type: 'text' },
+        {
+          label:
+            'UNIDAD DE ESTADO SÓLIDO SDD - AL MENOS CON EL SIGUIENTE ALMACENAMIENTO',
+          name: 'unidad_estado_solido',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // Base para Laptops
+      const camposLaptops = [
+        {
+          label: 'ACCESORIOS / ADAPTADOR VIDEO',
+          name: 'accesorios_adaptador_video',
+          type: 'text',
+        },
+        {
+          label: 'ACCESORIOS / CARGADOR DE BATERÍA',
+          name: 'accesorios_cargador_bateria',
+          type: 'text',
+        },
+        {
+          label: 'ACCESORIOS / MALETÍN O MOCHILA',
+          name: 'accesorios_maletin_mochila',
+          type: 'text',
+        },
+        {
+          label: 'ALMACENAMIENTO / CANTIDAD',
+          name: 'almacenamiento_cantidad',
+          type: 'text',
+        },
+        {
+          label: 'ALMACENAMIENTO / CAPACIDAD MÍNIMO',
+          name: 'almacenamiento_capacidad_minimo',
+          type: 'text',
+        },
+        {
+          label: 'AURICULARES Y MICRÓFONO',
+          name: 'auriculares_microfono',
+          type: 'text',
+        },
+        {
+          label: 'BATERÍA / FUENTE DE ALIMENTACIÓN',
+          name: 'bateria_fuente_alimentacion',
+          type: 'text',
+        },
+        {
+          label: 'BATERÍAS (DURACIÓN MÍNIMA)',
+          name: 'baterias_duracion_minima',
+          type: 'text',
+        },
+        { label: 'CÁMARA WEB', name: 'camara_web', type: 'text' },
+        { label: 'CERTIFICADOS', name: 'certificados', type: 'text' },
+        { label: 'COMPUTADOR / MARCA', name: 'computador_marca', type: 'text' },
+        {
+          label: 'COMPUTADOR / MODELO',
+          name: 'computador_modelo',
+          type: 'text',
+        },
+        { label: 'EQUIPO', name: 'equipo', type: 'text' },
+        {
+          label: 'FRECUENCIA TURBO MÁXIMO',
+          name: 'frecuencia_turbo_maximo',
+          type: 'text',
+        },
+        {
+          label: 'INTERFAZ Y TIPO DEL MOUSE EXTERNO',
+          name: 'mouse_externo_interfaz_tipo',
+          type: 'text',
+        },
+        {
+          label: 'MARCA DE PROCESADOR',
+          name: 'procesador_marca',
+          type: 'text',
+        },
+        {
+          label: 'MEMORIA RAM EXPANDIBLE MÍNIMA',
+          name: 'memoria_ram_expandible_minima',
+          type: 'text',
+        },
+        {
+          label: 'MODELO DE PROCESADOR',
+          name: 'procesador_modelo',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / CANTIDAD DE RANURAS RAM DDR4',
+          name: 'motherboard_ranuras_ram_ddr4',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / CHIPSET',
+          name: 'motherboard_chipset',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / CONECTIVIDAD',
+          name: 'motherboard_conectividad',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / MEMORIA RAM INSTALADA',
+          name: 'motherboard_memoria_ram_instalada',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / PUERTOS FUNCIONALES, AL MENOS LOS SIGUIENTES:',
+          name: 'motherboard_puertos_funcionales',
+          type: 'text',
+        },
+        {
+          label: 'MOTHERBOARD / SEGURIDAD:',
+          name: 'motherboard_seguridad',
+          type: 'text',
+        },
+        { label: 'MOUSE TÁCTIL', name: 'mouse_tactil', type: 'text' },
+        { label: 'PARLANTES', name: 'parlantes', type: 'text' },
+        {
+          label: 'PROCESADOR / FRECUENCIA BASE MÍNIMO',
+          name: 'procesador_frecuencia_base_minimo',
+          type: 'text',
+        },
+        {
+          label: 'PROCESADOR / MEMORIA CACHÉ MÍNIMO',
+          name: 'procesador_memoria_cache_minimo',
+          type: 'text',
+        },
+        {
+          label: 'PROCESADOR / NÚMERO DE HILOS O SUBPROCESOS MÍNIMO',
+          name: 'procesador_numero_hilos_subprocesos_minimo',
+          type: 'text',
+        },
+        {
+          label: 'PROCESADOR / NÚMERO DE NÚCLEOS MÍNIMO',
+          name: 'procesador_numero_nucleos_minimo',
+          type: 'text',
+        },
+        {
+          label: 'SISTEMA OPERATIVO / SOFTWARE LICENCIADO',
+          name: 'sistema_operativo_software_licenciado',
+          type: 'text',
+        },
+        { label: 'TAMAÑO DE PANTALLA', name: 'tamano_pantalla', type: 'text' },
+        {
+          label: 'TARJETA DE VIDEO / PROCESADOR GRÁFICO - GPU',
+          name: 'tarjeta_video_procesador_grafico_gpu',
+          type: 'text',
+        },
+        { label: 'TECLADO', name: 'teclado', type: 'text' },
+        { label: 'TECLADO / IDIOMA', name: 'teclado_idioma', type: 'text' },
+        { label: 'TIPO DE PANTALLA', name: 'tipo_pantalla', type: 'text' },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // Base para Impresoras Multifunción Tinta Continua
+      const camposImpresorasMultifuncion = [
+        {
+          label: 'BANDEJAS DE ALIMENTACIÓN',
+          name: 'bandejas_alimentacion',
+          type: 'text',
+        },
+        {
+          label: 'CANTIDAD DE USUARIOS',
+          name: 'cantidad_usuarios',
+          type: 'text',
+        },
+        {
+          label: 'CICLO DE TRABAJO MÁXIMO PÁGINAS / MENSUAL',
+          name: 'ciclo_trabajo_maximo_paginas_mensual',
+          type: 'text',
+        },
+        {
+          label: 'CICLO RECOMENDADO EFECTIVO MENSUAL',
+          name: 'ciclo_recomendado_efectivo_mensual',
+          type: 'text',
+        },
+        {
+          label: 'COLORES DE IMPRESIÓN',
+          name: 'colores_impresion',
+          type: 'text',
+        },
+        {
+          label: 'CONSUMO ENERGÉTICO EN OPERACIÓN',
+          name: 'consumo_energetico_en_operacion',
+          type: 'text',
+        },
+        { label: 'CPC', name: 'cpc', type: 'text' },
+        { label: 'FABRICANTE', name: 'fabricante', type: 'text' },
+        { label: 'IMPRESIÓN DÚPLEX', name: 'impresion_duplex', type: 'text' },
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        { label: 'NETWORK', name: 'network', type: 'text' },
+        {
+          label: 'RESOLUCIÓN DE IMPRESIÓN',
+          name: 'resolucion_impresion',
+          type: 'text',
+        },
+        { label: 'SCAN DÚPLEX', name: 'scan_duplex', type: 'text' },
+        {
+          label: 'SISTEMAS OPERATIVOS COMPATIBLES',
+          name: 'sistemas_operativos_compatibles',
+          type: 'text',
+        },
+        {
+          label: 'SUMINISTRO INICIAL POR COLOR',
+          name: 'suministro_inicial_por_color',
+          type: 'text',
+        },
+        {
+          label: 'TAMAÑOS DE PAPEL SOPORTADOS',
+          name: 'tamano_papel_soportados',
+          type: 'text',
+        },
+        {
+          label: 'TECNOLOGÍA DE IMPRESIÓN',
+          name: 'tecnologia_impresion',
+          type: 'text',
+        },
+        {
+          label: 'TIEMPO DE GARANTÍA TÉCNICA',
+          name: 'tiempo_garantia_tecnica',
+          type: 'text',
+        },
+        { label: 'VAE', name: 'vae', type: 'text' },
+        {
+          label: 'VELOCIDAD DE IMPRESIÓN',
+          name: 'velocidad_impresion',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // Campos para Scanners
+      const camposScanners = [
+        {
+          label: 'CAPACIDAD DEL ADF HOJAS',
+          name: 'capacidad_adf_hojas',
+          type: 'text',
+        },
+        {
+          label: 'CICLO DE TRABAJO MÁXIMO IMÁGENES / DIARIO',
+          name: 'ciclo_trabajo_maximo_imagenes_diario',
+          type: 'text',
+        },
+        { label: 'CONECTIVIDAD', name: 'conectividad', type: 'text' },
+        {
+          label: 'CONSUMO ENERGÉTICO EN OPERACIÓN',
+          name: 'consumo_energetico_en_operacion',
+          type: 'text',
+        },
+        { label: 'CPC', name: 'cpc', type: 'text' },
+        { label: 'ESCANEO DÚPLEX', name: 'escanear_duplex', type: 'text' },
+        { label: 'FABRICANTE', name: 'fabricante', type: 'text' },
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        {
+          label: 'RESOLUCIÓN DE ESCANEO',
+          name: 'resolucion_escanear',
+          type: 'text',
+        },
+        {
+          label: 'SISTEMAS OPERATIVOS COMPATIBLES',
+          name: 'sistemas_operativos_compatibles',
+          type: 'text',
+        },
+        {
+          label: 'SOFTWARE DE CAPTURA',
+          name: 'software_captura',
+          type: 'text',
+        },
+        {
+          label: 'TAMAÑOS DE PAPEL SOPORTADOS',
+          name: 'tamano_papel_soportados',
+          type: 'text',
+        },
+        {
+          label: 'TIEMPO DE GARANTÍA TÉCNICA',
+          name: 'tiempo_garantia_tecnica',
+          type: 'text',
+        },
+        { label: 'VAE', name: 'vae', type: 'text' },
+        {
+          label: 'VELOCIDAD DE ESCANEO DÚPLEX',
+          name: 'velocidad_escanear_duplex',
+          type: 'text',
+        },
+        {
+          label: 'VELOCIDAD DE ESCANEO SIMPLE',
+          name: 'velocidad_escanear_simple',
+          type: 'text',
+        },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      //Campos para Fuentes de Poder
+      const camposFuentesPoder = [
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        { label: 'POTENCIA', name: 'potencia', type: 'text' },
+        { label: 'TIPO DE CONECTORES', name: 'tipo_conectores', type: 'text' },
+        { label: 'EFICIENCIA', name: 'eficiencia', type: 'text' },
+        { label: 'GARANTÍA', name: 'garantia', type: 'text' },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // Campos para Cámaras Web
+      const camposCamarasWeb = [
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        {
+          label: 'RESOLUCIÓN DE VIDEO',
+          name: 'resolucion_video',
+          type: 'text',
+        },
+        { label: 'TIPO DE CONEXIÓN', name: 'tipo_conexion', type: 'text' },
+        {
+          label: 'COMPATIBILIDAD DE SISTEMA OPERATIVO',
+          name: 'compatibilidad_so',
+          type: 'text',
+        },
+        {
+          label: 'MICRÓFONO INTEGRADO',
+          name: 'microfono_integrado',
+          type: 'text',
+        },
+        { label: 'GARANTÍA', name: 'garantia', type: 'text' },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      //Campos para Microfonos
+      const camposMicrofonos = [
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        { label: 'TIPO DE CONEXIÓN', name: 'tipo_conexion', type: 'text' },
+        {
+          label: 'COMPATIBILIDAD DE SISTEMA OPERATIVO',
+          name: 'compatibilidad_so',
+          type: 'text',
+        },
+        { label: 'SENSIBILIDAD', name: 'sensibilidad', type: 'text' },
+        { label: 'GARANTÍA', name: 'garantia', type: 'text' },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // Campos para Proyectores
+      const camposProyectores = [
+        { label: 'MARCA', name: 'marca', type: 'text' },
+        { label: 'MODELO', name: 'modelo', type: 'text' },
+        { label: 'RESOLUCIÓN NATIVE', name: 'resolucion_native', type: 'text' },
+        {
+          label: 'BRILLO LÚMENES ANSI',
+          name: 'brillo_lumenes_ansi',
+          type: 'text',
+        },
+        { label: 'CONTRASTE', name: 'contraste', type: 'text' },
+        { label: 'TIPO DE CONEXIÓN', name: 'tipo_conexion', type: 'text' },
+        {
+          label: 'COMPATIBILIDAD DE SISTEMA OPERATIVO',
+          name: 'compatibilidad_so',
+          type: 'text',
+        },
+        { label: 'GARANTÍA', name: 'garantia', type: 'text' },
+        { label: 'Imagen Referencial', name: 'imagen', type: 'file' },
+      ];
+
+      // --- NUEVA LÓGICA JERÁRQUICA ---
+      // Define la URL base de tu API de backend
+
+      const API_BASE_URL = 'http://localhost:3001'; // <-- ¡ESTA ES LA LÍNEA QUE DEBES AÑADIR AQUÍ!
+
+      const formFicha = document.getElementById('form-ficha');
+      const categoriaFicha = document.getElementById('categoriaFicha');
+      const subcategoriaFicha = document.getElementById('subcategoriaFicha');
+      const tipoFicha = document.getElementById('tipoFicha');
+
+      // Microinteracciones animadas para selects jerárquicos
+      [categoriaFicha, subcategoriaFicha, tipoFicha].forEach((select) => {
+        select.addEventListener('focus', function () {
+          this.classList.add('animated');
+        });
+        select.addEventListener('blur', function () {
+          this.classList.remove('animated');
+        });
+        select.addEventListener('mouseenter', function () {
+          this.classList.add('animated');
+        });
+        select.addEventListener('mouseleave', function () {
+          this.classList.remove('animated');
+        });
+        select.addEventListener('change', function () {
+          this.classList.remove('animated');
+          void this.offsetWidth;
+          this.classList.add('animated');
+        });
+      });
+
+      // Estructura jerárquica de categorías, subcategorías y tipos
+      const estructuraFichas = {
+        canes: {
+          'CANES DE TRABAJO': {
+            'Canes Antidrogas': camposCanesAntidrogas,
+            'Canes de Control del Orden': camposCanesControlOrden,
+            'Canes de Busqueda de Personas y Restos Humanos':
+              camposCanesBusqueda,
+            'Canes de Relaciones Públicas y Agilidad Canina':
+              camposCanesRelPublicas,
+            'Canes de Terapia Asistida': camposCanesTerapia,
+          },
+        },
+        logistica: {
+          VEHÍCULOS: {
+            Camiones: camposCamiones,
+            Camionetas: camposCamioneta,
+            Furgonetas: camposFurgoneta,
+          },
+        },
+        activos: {
+          MUEBLES: {
+            'Muebles de Oficina': camposMueblesOficina,
+            'Muebles de Dormitorio': camposMueblesDormitorio,
+          },
+          TECNOLOGÍA: {
+            'Computadores de Escritorio': camposComputadoresEscritorio,
+            Laptops: camposLaptops,
+            'Impresoras Multifunción Tinta Continua':
+              camposImpresorasMultifuncion,
+            Scanners: camposScanners,
+            'Fuentes de Poder UPS': camposFuentesPoder,
+            'Cámaras Web': camposCamarasWeb,
+            Micrófonos: camposMicrofonos,
+            Proyectores: camposProyectores,
+          },
+        },
+      };
+
+      // Actualiza subcategorías según categoría
+      categoriaFicha.addEventListener('change', function () {
+        subcategoriaFicha.innerHTML = '<option value="">Seleccione...</option>';
+        tipoFicha.innerHTML = '<option value="">Seleccione...</option>';
+        tipoFicha.disabled = true;
+        formFicha.innerHTML = '';
+        formFicha.style.display = 'none';
+        if (!this.value) {
+          subcategoriaFicha.disabled = true;
+          return;
+        }
+        const subcats = Object.keys(estructuraFichas[this.value]);
+        subcats.forEach((sc, idx) => {
+          const opt = document.createElement('option');
+          opt.value = sc;
+          opt.textContent = sc;
+          opt.classList.add('animate__animated', 'animate__fadeInLeft');
+          opt.style.setProperty('animation-delay', 0.05 * idx + 's');
+          subcategoriaFicha.appendChild(opt);
+        });
+        subcategoriaFicha.disabled = false;
+        // Animación para el select principal
+        categoriaFicha.classList.remove('animate__pulse');
+        void categoriaFicha.offsetWidth;
+        categoriaFicha.classList.add('animate__animated', 'animate__pulse');
+      });
+
+      // Actualiza tipos según subcategoría
+      subcategoriaFicha.addEventListener('change', function () {
+        tipoFicha.innerHTML = '<option value="">Seleccione...</option>';
+        formFicha.innerHTML = '';
+        formFicha.style.display = 'none';
+        if (!this.value || !categoriaFicha.value) {
+          tipoFicha.disabled = true;
+          return;
+        }
+        const tipos = Object.keys(
+          estructuraFichas[categoriaFicha.value][this.value]
+        );
+        tipos.forEach((t, idx) => {
+          const opt = document.createElement('option');
+          opt.value = t;
+          opt.textContent = t;
+          opt.classList.add('animate__animated', 'animate__fadeInLeft');
+          opt.style.setProperty('animation-delay', 0.05 * idx + 's');
+          tipoFicha.appendChild(opt);
+        });
+        tipoFicha.disabled = false;
+        // Animación para el select de subcategoría
+        subcategoriaFicha.classList.remove('animate__pulse');
+        void subcategoriaFicha.offsetWidth;
+        subcategoriaFicha.classList.add('animate__animated', 'animate__pulse');
+      });
+
+      // Renderiza campos según tipo con animaciones y microinteracciones
+      tipoFicha.addEventListener('change', function () {
+        formFicha.innerHTML = '';
+        if (!this.value || !categoriaFicha.value || !subcategoriaFicha.value) {
+          formFicha.style.display = 'none';
+          return;
+        }
+        const campos =
+          estructuraFichas[categoriaFicha.value][subcategoriaFicha.value][
+            this.value
+          ] || [];
+        if (campos.length) {
+          formFicha.classList.remove('animate__fadeIn');
+          void formFicha.offsetWidth; // reinicia animación
+          formFicha.classList.add('animate__animated', 'animate__fadeIn');
+          campos.forEach((c, idx) => {
+            const div = document.createElement('div');
+            div.className = 'mb-3 animate__animated animate__fadeInUp';
+            div.style.setProperty('animation-delay', 0.05 * idx + 's');
+            const label = document.createElement('label');
+            label.textContent = c.label;
+            label.className = 'form-label';
+            label.setAttribute('for', c.name);
+            let input;
+            if (c.type === 'file') {
+              input = document.createElement('input');
+              input.type = 'file';
+              input.accept = 'image/*';
+            } else {
+              input = document.createElement('input');
+              input.type = c.type;
+            }
+            input.className = 'form-control';
+            input.name = c.name;
+            input.id = c.name;
+            if (c.type !== 'file') input.required = true;
+            // Microinteracción: resalta label al enfocar
+            input.addEventListener('focus', function () {
+              label.classList.add('focused');
+            });
+            input.addEventListener('blur', function () {
+              label.classList.remove('focused');
+            });
+            div.appendChild(label);
+            div.appendChild(input);
+            formFicha.appendChild(div);
+          });
+          // Botones
+          const btns = document.createElement('div');
+          btns.className = 'text-center';
+          btns.innerHTML = `<button type="submit" class="btn btn-primary animate__animated animate__pulse animate__delay-1s" onmouseenter="this.classList.add('animate__tada')" onmouseleave="this.classList.remove('animate__tada')"><i class="bi bi-save"></i> Guardar Ficha</button> <button type="reset" class="btn btn-secondary animate__animated" onmouseenter="this.classList.add('animate__rubberBand')" onmouseleave="this.classList.remove('animate__rubberBand')"><i class="bi bi-eraser"></i> Limpiar</button>`;
+          formFicha.appendChild(btns);
+          formFicha.style.display = '';
+        } else {
+          formFicha.style.display = 'none';
+        }
+      });
+
+      // Envío de formulario con loader animado y alerta visual
+      const loaderFicha = document.getElementById('loader-ficha');
+      formFicha.addEventListener('submit', function (e) {
+        e.preventDefault();
+        loaderFicha.classList.add('show');
+        const tipo = tipoFicha.value;
+        const formData = new FormData(formFicha);
+        const token = localStorage.getItem('token');
+        const endpointsPorTipo = {
+          // Canes Biológicos - CANES DE TRABAJO (claves exactas)
+          'Canes Antidrogas': '/api/fichas/canes/antidrogas',
+          'Canes de Control del Orden': '/api/fichas/canes/control-orden',
+          'Canes de Busqueda de Personas y Restos Humanos':
+            '/api/fichas/canes/busqueda',
+          'Canes de Relaciones Públicas y Agilidad Canina':
+            '/api/fichas/canes/rel-publicas',
+          'Canes de Terapia Asistida': '/api/fichas/canes/terapia',
+
+          // Logística - VEHÍCULOS
+          Camiones: '/api/fichas/vehiculos/camiones',
+          Camionetas: '/api/fichas/vehiculos/camionetas',
+          Furgonetas: '/api/fichas/vehiculos/furgonetas',
+
+          // Activos Fijos - MUEBLES
+          'Muebles de Oficina': '/api/fichas/muebles/oficina',
+          'Muebles de Dormitorio': '/api/fichas/muebles/dormitorio',
+
+          // Activos Fijos - TECNOLOGÍA
+          'Computadores de Escritorio': '/api/fichas/computadores/escritorio',
+          Laptops: '/api/fichas/computadores/laptops',
+          'Impresoras Multifunción Tinta Continua':
+            '/api/fichas/impresoras/multifuncion',
+          Scanners: '/api/fichas/perifericos/scanners',
+          'Fuentes de Poder UPS': '/api/fichas/perifericos/fuentes-poder',
+          'Cámaras Web': '/api/fichas/perifericos/camaras-web',
+          Micrófonos: '/api/fichas/perifericos/microfonos',
+          Proyectores: '/api/fichas/perifericos/proyectores',
+        };
+
+        // Debug para verificar coincidencia (puedes quitar después)
+        console.log('Tipo seleccionado:', `"${tipo}"`);
+        console.log(
+          '¿Existe en endpoints?',
+          endpointsPorTipo.hasOwnProperty(tipo)
+        );
+
+        // Verifica si el tipo de ficha tiene un endpoint definido
+        if (!tipo || !endpointsPorTipo[tipo]) {
+          loaderFicha.classList.remove('show');
+          mostrarAlerta(
+            'danger',
+            `Por favor, selecciona un tipo de ficha válido. Tipo recibido: "${tipo}"`
+          );
+          return;
+        }
+
+        // Obtener endpoint y hacer fetch
+        const endpoint = endpointsPorTipo[tipo];
+        fetch(API_BASE_URL + endpoint, {
+          // <-- ¡ASÍ DEBE QUEDAR ESTA LÍNEA!
+          method: 'POST',
+          headers: { Authorization: 'Bearer ' + token },
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            loaderFicha.classList.remove('show');
+            mostrarAlerta(
+              'success',
+              data.mensaje || 'Ficha guardada exitosamente'
+            );
+            formFicha.reset();
+            formFicha.style.display = 'none';
+            tipoFicha.value = '';
+          })
+          .catch((error) => {
+            loaderFicha.classList.remove('show');
+            console.error('Error:', error);
+            mostrarAlerta('danger', 'Error al guardar ficha.');
+          });
+      });
+
+      // Función para mostrar alertas animadas
+      function mostrarAlerta(tipo, mensaje) {
+        const alerta = document.getElementById('alerta-ficha');
+        alerta.innerHTML = `<div class="alert alert-${tipo} alert-custom animate__animated animate__fadeInDown" role="alert">
+          <i class="bi ${
+            tipo === 'success'
+              ? 'bi-check-circle-fill'
+              : 'bi-exclamation-triangle-fill'
+          }"></i> ${mensaje}
+        </div>`;
+        alerta.style.display = '';
+        setTimeout(() => {
+          alerta.classList.add('animate__fadeOutUp');
+          setTimeout(() => {
+            alerta.style.display = 'none';
+            alerta.classList.remove('animate__fadeOutUp');
+            alerta.innerHTML = '';
+          }, 1200);
+        }, 2500);
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Lógica para cargar categorías desde el backend (se agregará después con Fetch)
+      // Validación o interacción futura se agregará aquí
+    </script>
+  </body>
+</html>
+
+<script>
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Acceso denegado. Por favor inicia sesión.');
+    window.location.href = 'login.html';
+  }
+</script>

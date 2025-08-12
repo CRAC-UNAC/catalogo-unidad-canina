@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro - Unidad Canina</title>
+    <!-- Animate.css CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      @media (max-width: 900px) {
+        .imagen-derecha {
+          display: none;
+        }
+        body {
+          justify-content: center;
+          padding-left: 0;
+        }
+        .card {
+          width: 95vw;
+          min-width: unset;
+          max-width: 99vw;
+        }
+      }
+      @media (max-width: 600px) {
+        .card {
+          padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+          font-size: 0.95rem;
+        }
+        .modal-content {
+          min-width: 90vw;
+          padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+        }
+        body::before {
+          background-size: cover;
+        }
+      }
+      .imagen-derecha {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 45vw;
+        height: 100vh;
+        background: url('../img/fondos.png') no-repeat center center;
+        background-size: cover;
+        z-index: 10;
+        opacity: 0;
+        animation: fadeInRight 1.2s forwards;
+        pointer-events: none;
+        
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes fadeOutRight {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+      }
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        padding-left: 4%;
+        background: linear-gradient(135deg, #19458d 60%, #a7a9ab 65%);
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url('../img/fondosr.png') no-repeat center center fixed;
+        background-size: contain;
+        background-position: center;
+        opacity: 1;
+        z-index: 0;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .card {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(0, 3, 3, 0.449);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 2.5rem 2rem 2rem 2rem;
+        width: 400px;
+        max-width: 90vw;
+        box-shadow: 0 12px 32px rgba(11, 28, 112, 0.512);
+        text-align: center;
+        border: 3px solid #13063c;
+        animation-delay: 0.2s;
+      }
+
+      .card h2 {
+        margin-bottom: 1rem;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+
+      input {
+        width: calc(100% - 1.4rem);
+        padding: 0.7rem;
+        margin: 0.4rem 0;
+        border: 2px solid #ffffff;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: #ffffff46;
+        transition: border 0.3s;
+        box-sizing: border-box;
+      }
+
+      input:focus {
+        border: 2px solid #211244;
+        outline: none;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: #0b3155;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08);
+        margin-top: 1rem;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      button:hover {
+        background-color: #1f2c54;
+        color: #ffffff;
+      }
+
+      .volver {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .volver a {
+        color: #ff9e15;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      .volver a:hover {
+        text-decoration: verdana;
+        color: #1f2c54;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: #fff;
+        border-radius: 16px;
+        padding: 2rem 2.5rem 1.5rem 2.5rem;
+        box-shadow: 0 8px 32px rgba(31, 44, 84, 0.18);
+        text-align: center;
+        min-width: 340px;
+        max-width: 95vw;
+        position: relative;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .modal-content h3 {
+        color: #1f2c54;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+
+      .modal-content input {
+        width: calc(100% - 1.4rem);
+        padding: 0.7rem;
+        margin-bottom: 1rem;
+        border: 2px solid #1f2c54;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: #f5f5dc;
+        box-sizing: border-box;
+      }
+
+      .error-message {
+        color: #ff9d1569(252, 6, 6);
+        font-size: 0.95rem;
+        min-height: 1.5em;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          justify-content: center;
+          padding-left: 0;
+        }
+
+        .card {
+          width: 350px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="imagen-derecha" id="imgDerecha"></div>
+    <div class="card animate__animated animate__fadeIn">
+      <img
+        src="../img/logo-canina.png"
+        alt="Logo Unidad Canina"
+        style="
+          width: 100px;
+          margin-bottom: 1.2rem;
+          border-radius: 50%;
+          border: 2px solid #f4f4f7;
+          background: #fff;
+          box-shadow: 0 2px 8px rgba(31, 44, 84, 0.12);
+        "
+      />
+      <h2>Registro de Usuario</h2>
+      <form id="formRegistro">
+        <input
+          type="text"
+          placeholder="Nombre completo"
+          name="nombre"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Correo institucional"
+          name="correo"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Nombre de usuario"
+          name="usuario"
+          required
+        />
+        <input type="password" placeholder="Contraseña" name="clave" required />
+        <input
+          type="password"
+          placeholder="Confirmar contraseña"
+          name="confirmar"
+          required
+        />
+        <button type="submit">Registrarse</button>
+      </form>
+      <div class="volver">
+        ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+      </div>
+    </div>
+
+    <!-- Modal para código institucional -->
+    <div id="modalCodigo" class="modal">
+      <div class="modal-content">
+        <h3>Código institucional</h3>
+        <input
+          id="inputCodigoModal"
+          type="text"
+          placeholder="Ingrese el código"
+        />
+        <div id="errorCodigoModal" class="error-message"></div>
+        <button id="btnEnviarCodigo">Validar y Registrar</button>
+        <div class="volver">
+          ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Animación de salida de la imagen al cambiar de página
+      function fadeOutImgDerecha(callback) {
+        const img = document.getElementById('imgDerecha');
+        img.style.animation = 'fadeOutRight 0.8s forwards';
+        setTimeout(() => {
+          if (callback) callback();
+        }, 800);
+      }
+
+      // Interceptar todos los enlaces para animar salida
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('a').forEach((a) => {
+          if (a.href && !a.href.endsWith('#')) {
+            a.addEventListener('click', function (e) {
+              e.preventDefault();
+              fadeOutImgDerecha(() => {
+                window.location.href = a.href;
+              });
+            });
+          }
+        });
+      });
+      // Variables del modal
+      const modalCodigo = document.getElementById('modalCodigo');
+      const inputCodigoModal = document.getElementById('inputCodigoModal');
+      const btnEnviarCodigo = document.getElementById('btnEnviarCodigo');
+      const errorCodigoModal = document.getElementById('errorCodigoModal');
+      const formRegistro = document.getElementById('formRegistro');
+
+      // Manejar envío del formulario
+      formRegistro.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validar que las contraseñas coincidan
+        const clave = document.querySelector('input[name="clave"]').value;
+        const confirmar = document.querySelector(
+          'input[name="confirmar"]'
+        ).value;
+
+        if (clave !== confirmar) {
+          alert('Las contraseñas no coinciden');
+          return;
+        }
+
+        // Mostrar modal para código institucional
+        modalCodigo.style.display = 'flex';
+        inputCodigoModal.focus();
+      });
+
+      // Manejar validación del código
+      btnEnviarCodigo.addEventListener('click', function () {
+        const codigo = inputCodigoModal.value.trim();
+
+        if (!codigo) {
+          errorCodigoModal.textContent =
+            'Por favor ingrese el código institucional';
+          return;
+        }
+
+        // Aquí iría la lógica para validar el código
+        // Por ahora simulamos una validación exitosa
+        if (codigo === '12345') {
+          alert('Registro exitoso');
+          modalCodigo.style.display = 'none';
+          formRegistro.reset();
+        } else {
+          errorCodigoModal.textContent = 'Código institucional inválido';
+        }
+      });
+
+      // Cerrar modal con ESC
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modalCodigo.style.display === 'flex') {
+          modalCodigo.style.display = 'none';
+        }
+      });
+
+      // Cerrar modal al hacer clic fuera
+      modalCodigo.addEventListener('click', function (e) {
+        if (e.target === modalCodigo) {
+          modalCodigo.style.display = 'none';
+        }
+      });
+
+      // Permitir envío con Enter en el modal
+      inputCodigoModal.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          btnEnviarCodigo.click();
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
+

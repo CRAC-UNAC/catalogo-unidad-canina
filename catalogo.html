@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unidad Nacional Canina - Catálogo Electrónico.</title>
+  
+  <!-- Font Awesome para íconos -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p1PcZj3QWklhE5fWdpWph1mU/+JgPX+jr0Bq+mCz3GhjaE+xEjPq3Uw5/0ztmBvTwXD3F9pVH9XoEjM4cT8ykw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .header-principal {
+      background-color:  #1F2C54;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-policia, .logo-canina {
+      height: 60px;
+      width: auto;
+    }
+
+    .header-principal h1 {
+      flex-grow: 1;
+      font-size: 24px;
+      margin: 0 20px;
+    }
+
+    .menu-contenedor {
+      background-color: #white;
+      padding: 10px 20px;
+      border-bottom: 2px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-menu {
+      flex-grow: 20;
+    }
+
+    .menu-principal {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .menu-item {
+      position: relative;
+      padding: 10px 15px;
+      background-color: #1F2C54;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .menu-item:hover {
+      background-color: #3d3c4c;
+    }
+
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #089d9be9;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      list-style: none;
+      min-width: 200px;
+      display: none;
+      z-index: 1000;
+    }
+
+    .menu-item:hover .submenu {
+      display: block;
+    }
+
+    .submenu li {
+      padding: 10px 15px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .submenu li:hover {
+      background-color: #ffe600;
+    }
+
+    .submenu-secundario {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      background-color: white;
+      border: 1px solid #1F2C54;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      list-style: none;
+      min-width: 180px;
+      display: none;
+      z-index: 1001;
+    }
+
+    .submenu li:hover .submenu-secundario {
+      display: block;
+    }
+
+    .item-seleccionable {
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .item-seleccionable:hover {
+      background-color: #e3f2fd;
+    }
+
+    .buscador {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    #input-busqueda {
+      padding: 8px 40px 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 25px;
+      font-size: 14px;
+      width: 250px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    #input-busqueda:focus {
+      border-color: #1F2C54;
+    }
+
+    .icono-lupa {
+      position: absolute;
+      right: 12px;
+      color: #666;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .area-ficha {
+      margin: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .area-ficha h2 {
+      color: #1F2C54;
+      margin-bottom: 15px;
+    }
+
+    #contenido-ficha {
+      margin-bottom: 20px;
+    }
+
+    #contenido-ficha h3 {
+      color: #3f4129;
+      margin-bottom: 10px;
+    }
+
+    #contenido-ficha ul {
+      margin-left: 20px;
+    }
+
+    #contenido-ficha li {
+      margin-bottom: 5px;
+    }
+
+    #btn-descargar {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    #btn-descargar:hover {
+      background-color: #2563eb;
+    }
+
+    .resultado-busqueda {
+      background-color: #fff3cd;
+      border: 1px solid #ffeaa7;
+    }
+
+    .sin-resultados {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header class="header-principal">
+    <img src="img/logo-policia.png" alt="Policía Nacional" class="logo-policia" />
+    <h1>Unidad Nacional Canina <br> Catalogo Electrónico</h1>
+    <img src="img/logo-canina.png" alt="Unidad Canina" class="logo-canina" />
+  </header>
+
+  <!-- Menú y búsqueda -->
+  <div class="menu-contenedor">
+
+    <!-- Menú -->
+    <nav class="nav-menu">
+      <ul class="menu-principal" id="menu-principal">
+        <li class="menu-item">Canes
+          <ul class="submenu">
+            <li>Canes Antidrogas
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="pastor belga malinois">Pastor Belga Malinois</li>
+                <li class="item-seleccionable" data-ficha="golden retriever">Golden Retriever</li>
+                <li class="item-seleccionable" data-ficha="pastor sable">Pastor Belga Malinois</li>
+                <li class="item-seleccionable" data-ficha="pastor holandez">Pastor Belga Malinois</li>
+                <li class="item-seleccionable" data-ficha="Labrador Retriever">Pastor Belga Malinois</li>
+              </ul>
+            </li>
+            <li>Canes de Control del Orden
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="orden-a">Raza A</li>
+              </ul>
+            </li>
+            <li>Canes de Agilidad Canina
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="agilidad-a">Raza Agilidad A</li>
+              </ul>
+            </li>
+            <li>Canes de Canoterapia
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="terapia-a">Raza Terapia</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-item">Logística
+          <ul class="submenu">
+            <li>Vehículos Pesados
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="camiones">Camiones</li>
+              </ul>
+            </li>
+            <li>Vehículos Livianos
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="camionetas">Camionetas</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-item">Activos Fijos
+          <ul class="submenu">
+            <li>Muebles de Oficina
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="escritorios">Escritorios</li>
+                <li class="item-seleccionable" data-ficha="archivadores">Archivadores</li>
+              </ul>
+            </li>
+            <li>Muebles de Dormitorio
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="camas">Camas Literas</li>
+              </ul>
+            </li>
+            <li>Equipos Tecnológicos
+              <ul class="submenu-secundario">
+                <li class="item-seleccionable" data-ficha="laptops">Laptops</li>
+                <li class="item-seleccionable" data-ficha="impresoras">Impresoras</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Barra de búsqueda -->
+    <div class="buscador">
+      <input
+        type="text"
+        id="input-busqueda"
+        placeholder="Buscar elementos..."
+        autocomplete="off"
+      />
+      <i class="fas fa-search icono-lupa"></i>
+    </div>
+  </div>
+
+  <!-- Área de resultados de búsqueda -->
+  <div id="resultados-busqueda" style="display: none; margin: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+    <h3>Resultados de búsqueda:</h3>
+    <div id="lista-resultados"></div>
+  </div>
+
+  <!-- Área de ficha técnica -->
+  <section id="area-ficha" class="area-ficha">
+    <h2>Ficha técnica</h2>
+    <div id="contenido-ficha">
+      <p>Seleccione un artículo del menú para ver su ficha técnica.</p>
+    </div>
+    <button id="btn-descargar" style="display:none;">Descargar PDF</button>
+  </section>
+
+  <!-- Script -->
+  <script>
+    const fichasTecnicas = {
+      "pastor-malinois": {
+        titulo: "Pastor Belga Malinois",
+        descripcion: "Raza especializada en detección de drogas.",
+        caracteristicas: [
+          "Altura: 60-66 cm",
+          "Peso: 25-30 kg",
+          "Temperamento: Inteligente y enérgico"
+        ]
+      },
+      "golden-retriever": {
+        titulo: "Golden Retriever",
+        descripcion: "Ideal para detección y trabajo terapéutico.",
+        caracteristicas: [
+          "Altura: 51-61 cm",
+          "Peso: 25-34 kg",
+          "Temperamento: Amigable y obediente"
+        ]
+      },
+      "orden-a": {
+        titulo: "Raza A - Control del Orden",
+        descripcion: "Especializada en control del orden público.",
+        caracteristicas: [
+          "Altura: 55-65 cm",
+          "Peso: 30-35 kg",
+          "Temperamento: Disciplinado y obediente"
+        ]
+      },
+      "agilidad-a": {
+        titulo: "Raza Agilidad A",
+        descripcion: "Especializada en pruebas de agilidad.",
+        caracteristicas: [
+          "Altura: 45-55 cm",
+          "Peso: 20-25 kg",
+          "Temperamento: Ágil y enérgico"
+        ]
+      },
+      "terapia-a": {
+        titulo: "Raza Terapia",
+        descripcion: "Especializada en canoterapia.",
+        caracteristicas: [
+          "Altura: 50-60 cm",
+          "Peso: 25-30 kg",
+          "Temperamento: Calmado y empático"
+        ]
+      },
+      "camiones": {
+        titulo: "Camiones",
+        descripcion: "Vehículos pesados para transporte.",
+        caracteristicas: [
+          "Capacidad: 5-10 toneladas",
+          "Combustible: Diésel",
+          "Uso: Transporte de equipos"
+        ]
+      },
+      "camionetas": {
+        titulo: "Camionetas",
+        descripcion: "Vehículos livianos para patrullaje.",
+        caracteristicas: [
+          "Capacidad: 1-2 toneladas",
+          "Combustible: Gasolina/Diésel",
+          "Uso: Patrullaje y transporte ligero"
+        ]
+      },
+      "escritorios": {
+        titulo: "Escritorios",
+        descripcion: "Muebles de oficina para trabajo administrativo.",
+        caracteristicas: [
+          "Material: Madera/Metal",
+          "Dimensiones: 120x60x75 cm",
+          "Uso: Trabajo administrativo"
+        ]
+      },
+      "archivadores": {
+        titulo: "Archivadores",
+        descripcion: "Muebles para almacenar documentos.",
+        caracteristicas: [
+          "Material: Metal",
+          "Capacidad: 4 cajones",
+          "Uso: Almacenamiento de documentos"
+        ]
+      },
+      "camas": {
+        titulo: "Camas Literas",
+        descripción: "Muebles para dormitorios.",
+        caracteristicas: [
+          "Material: Metal",
+          "Dimensiones: 200x90x160 cm",
+          "Uso: Descanso personal"
+        ]
+      },
+      "laptops": {
+        titulo: "Laptops",
+        descripcion: "Equipos tecnológicos portátiles.",
+        caracteristicas: [
+          "Procesador: Intel Core i5",
+          "RAM: 8GB",
+          "Uso: Trabajo administrativo"
+        ]
+      },
+      "impresoras": {
+        titulo: "Impresoras",
+        descripcion: "Equipos para impresión de documentos.",
+        caracteristicas: [
+          "Tipo: Láser/Tinta",
+          "Velocidad: 20-30 ppm",
+          "Uso: Impresión de documentos"
+        ]
+      }
+    };
+
+    const areaFicha = document.getElementById('contenido-ficha');
+    const btnDescargar = document.getElementById('btn-descargar');
+    const resultadosBusqueda = document.getElementById('resultados-busqueda');
+    const listaResultados = document.getElementById('lista-resultados');
+
+    // Mostrar ficha
+    function mostrarFicha(codigo) {
+      const ficha = fichasTecnicas[codigo];
+      if (!ficha) {
+        areaFicha.innerHTML = "<p>Ficha técnica no disponible.</p>";
+        btnDescargar.style.display = "none";
+        return;
+      }
+      let html = `<h3>${ficha.titulo}</h3><p>${ficha.descripcion}</p><ul>`;
+      ficha.caracteristicas.forEach(c => html += `<li>${c}</li>`);
+      html += `</ul>`;
+      areaFicha.innerHTML = html;
+      btnDescargar.style.display = "inline-block";
+      
+      // Ocultar resultados de búsqueda cuando se selecciona una ficha
+      resultadosBusqueda.style.display = "none";
+    }
+
+    // Agregar eventos a los elementos seleccionables
+    document.querySelectorAll('.item-seleccionable').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        mostrarFicha(item.getAttribute('data-ficha'));
+      });
+    });
+
+    // Búsqueda mejorada
+    const inputBusqueda = document.getElementById('input-busqueda');
+
+    inputBusqueda.addEventListener('input', () => {
+      const filtro = inputBusqueda.value.toLowerCase().trim();
+
+      if (filtro === "") {
+        resultadosBusqueda.style.display = "none";
+        return;
+      }
+
+      // Buscar en todos los elementos
+      const elementos = document.querySelectorAll('.item-seleccionable');
+      const resultados = [];
+
+      elementos.forEach(elemento => {
+        const texto = elemento.textContent.toLowerCase();
+        const codigo = elemento.getAttribute('data-ficha');
+        
+        if (texto.includes(filtro)) {
+          resultados.push({
+            elemento: elemento,
+            texto: elemento.textContent,
+            codigo: codigo
+          });
+        }
+      });
+
+      // Mostrar resultados
+      if (resultados.length > 0) {
+        let htmlResultados = "";
+        resultados.forEach(resultado => {
+          htmlResultados += `
+            <div class="resultado-item" style="padding: 10px; margin: 5px 0; background-color: white; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;" 
+                 onclick="mostrarFicha('${resultado.codigo}')">
+              <strong>${resultado.texto}</strong>
+            </div>
+          `;
+        });
+        listaResultados.innerHTML = htmlResultados;
+        resultadosBusqueda.style.display = "block";
+      } else {
+        listaResultados.innerHTML = '<div class="sin-resultados">No se encontraron resultados</div>';
+        resultadosBusqueda.style.display = "block";
+      }
+    });
+
+    // Ocultar resultados al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#resultados-busqueda') && !e.target.closest('.buscador')) {
+        resultadosBusqueda.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

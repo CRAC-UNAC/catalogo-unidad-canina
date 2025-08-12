@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escuadras - Unidad Canina</title>
+    <link rel="stylesheet" href="css/estilo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        background: #f5f7fa;
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+      }
+      .escuadras-header {
+        background: url('img/fondor.jpg') center/cover no-repeat;
+        color: #fff;
+        text-align: center;
+        padding: 80px 20px 40px 20px;
+        position: relative;
+      }
+      .escuadras-header::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,32,0.45);
+        z-index: 0;
+      }
+      .escuadras-header > * {
+        position: relative;
+        z-index: 1;
+      }
+      .escuadras-header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5em;
+        letter-spacing: 2px;
+      }
+      .escuadras-header p {
+        font-size: 1.3rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .escuadras-section {
+        max-width: 1100px;
+        margin: 60px auto 40px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .escuadra-row {
+        display: flex;
+        min-height: 320px;
+        background: #fff;
+        box-shadow: 0 2px 16px #0001;
+        margin-bottom: 0;
+        align-items: stretch;
+      }
+      .escuadra-row.left { flex-direction: row; }
+      .escuadra-row.right { flex-direction: row-reverse; }
+      .escuadra-text {
+        flex: 1 1 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 48px 40px 48px 40px;
+        font-size: 1.15em;
+        color: #222;
+      }
+      .escuadra-text h2 {
+        font-size: 2em;
+        color: #0a2a5c;
+        margin-bottom: 18px;
+        font-weight: bold;
+      }
+      .escuadra-photo {
+        flex: 1 1 50%;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        overflow: hidden;
+        min-height: 320px;
+      }
+      .escuadra-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s cubic-bezier(.4,1.5,.5,1), box-shadow 0.3s;
+        margin: 0;
+        border-radius: 0;
+      }
+      .escuadra-photo img:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 32px #19458d44;
+        z-index: 2;
+      }
+      @media (max-width: 900px) {
+        .escuadra-row, .escuadra-row.left, .escuadra-row.right {
+          flex-direction: column !important;
+          min-height: 0;
+        }
+        .escuadra-photo, .escuadra-text {
+          max-width: 100%; min-width: 0; padding: 18px 10px;
+        }
+        .escuadra-photo img { height: 220px; }
+      }
+      /* Bloques destacados y testimonios igual que historia.html */
+      .bloques-destacados { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin: 60px auto 40px auto; max-width: 1000px; }
+      .bloque { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 32px 24px; flex: 1 1 220px; min-width: 220px; max-width: 300px; text-align: center; }
+      .bloque i { font-size: 2.5em; color: #0a2a5c; margin-bottom: 12px; display: block; }
+      .bloque h3 { margin: 0 0 10px 0; font-size: 1.2em; }
+      .bloque p { margin: 0; font-size: 1em; color: #333; }
+      .testimonios { background: #eaf0fa; padding: 40px 0; }
+      .testimonio { max-width: 600px; margin: 24px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 28px 32px; position: relative; }
+      .testimonio:before { content: '“'; font-size: 3em; color: #0a2a5c; position: absolute; left: 18px; top: 10px; opacity: 0.2; }
+      .testimonio-cita { font-size: 1.1em; color: #222; margin-bottom: 12px; }
+      .testimonio-autor { font-weight: bold; color: #0a2a5c; font-size: 1em; }
+      footer { background: #0a2a5c; color: #fff; text-align: center; padding: 24px 10px 12px 10px; margin-top: 60px; }
+      footer img { height: 40px; margin: 0 10px; vertical-align: middle; }
+    </style>
+  </head>
+  <body>
+    <header class="escuadras-header animate__animated animate__fadeInDown">
+      <h1>Escuadras</h1>
+      <p>
+        Conoce las escuadras, sus logros y noticias destacadas de la Unidad
+        Canina.
+      </p>
+    </header>
+
+
+  <section class="escuadras-section">
+    <!-- Grupo Canino Antidrogas -->
+    <div class="escuadra-row left animate__animated animate__fadeInLeft">
+      <div class="escuadra-text">
+        <h2>Grupo Canino Antidrogas</h2>
+        <p>Especialistas en la detección de sustancias ilícitas, apoyando operativos de seguridad y prevención en todo el país.</p>
+      </div>
+      <div class="escuadra-photo">
+        <img src="img/policial1.png" alt="Antidrogas" />
+      </div>
+    </div>
+    <!-- Grupo Canino de Mantenimiento del Orden -->
+    <div class="escuadra-row right animate__animated animate__fadeInRight">
+      <div class="escuadra-text">
+        <h2>Grupo Canino de Mantenimiento del Orden</h2>
+        <p>Apoyo en control de multitudes, patrullaje preventivo y acompañamiento en eventos masivos para mantener la seguridad ciudadana.</p>
+      </div>
+      <div class="escuadra-photo">
+        <img src="img/policial2.png" alt="Mantenimiento del Orden" />
+      </div>
+    </div>
+    <!-- Grupo Canino de Búsqueda de Personas y Restos Humanos -->
+    <div class="escuadra-row left animate__animated animate__fadeInLeft">
+      <div class="escuadra-text">
+        <h2>Grupo Canino de Búsqueda de Personas y Restos Humanos</h2>
+        <p>Entrenados para localizar personas desaparecidas y colaborar en labores de rescate y recuperación en situaciones de emergencia.</p>
+      </div>
+      <div class="escuadra-photo">
+        <img src="img/noticia1.jpg" alt="Búsqueda de Personas" />
+      </div>
+    </div>
+    <!-- Grupo Canino de Terapia Asistida -->
+    <div class="escuadra-row right animate__animated animate__fadeInRight">
+      <div class="escuadra-text">
+        <h2>Grupo Canino de Terapia Asistida</h2>
+        <p>Colaboran en programas de apoyo emocional y terapéutico para niños, adultos mayores y personas en situación vulnerable.</p>
+      </div>
+      <div class="escuadra-photo">
+        <img src="img/malinois.png" alt="Terapia Asistida" />
+      </div>
+    </div>
+    <!-- Grupo Canino de Relaciones Públicas y Agilidad Canina -->
+    <div class="escuadra-row left animate__animated animate__fadeInLeft">
+      <div class="escuadra-text">
+        <h2>Grupo Canino de Relaciones Públicas y Agilidad Canina</h2>
+        <p>Participan en exhibiciones, actividades educativas y competencias de agilidad, promoviendo la imagen institucional y el vínculo con la comunidad.</p>
+      </div>
+      <div class="escuadra-photo">
+        <img src="img/policial.png" alt="Relaciones Públicas y Agilidad" />
+      </div>
+    </div>
+  </section>
+
+    <section class="bloques-destacados">
+      <div class="bloque">
+        <i class="fas fa-dog"></i>
+        <h3>+30 Canes</h3>
+        <p>Entrenados en búsqueda, rescate y detección.</p>
+      </div>
+      <div class="bloque">
+        <i class="fas fa-medal"></i>
+        <h3>10 Reconocimientos</h3>
+        <p>Premios nacionales e internacionales.</p>
+      </div>
+      <div class="bloque">
+        <i class="fas fa-users"></i>
+        <h3>Equipo Humano</h3>
+        <p>Profesionales dedicados y en constante formación.</p>
+      </div>
+    </section>
+
+    <section class="testimonios">
+      <div class="testimonio animate__animated animate__fadeInUp">
+        <div class="testimonio-cita">
+          “Ser parte de la Unidad Canina es un orgullo y una gran
+          responsabilidad. Cada día aprendemos de nuestros compañeros de cuatro
+          patas.”
+        </div>
+        <div class="testimonio-autor">Sargento Juan Pérez, Fundador</div>
+      </div>
+      <div class="testimonio animate__animated animate__fadeInUp">
+        <div class="testimonio-cita">
+          “La dedicación y el trabajo en equipo nos han permitido salvar vidas y
+          servir a la comunidad.”
+        </div>
+        <div class="testimonio-autor">Oficial María Gómez</div>
+      </div>
+    </section>
+
+    <footer>
+      <img src="img/logo-canina.png" alt="Logo Unidad Canina" />
+      <img src="img/logo-policia.png" alt="Logo Policía" />
+      <div style="margin-top: 10px; font-size: 0.95em">
+        &copy; 2025 Unidad Canina. Todos los derechos reservados.
+      </div>
+    </footer>
+
+    <!-- FontAwesome para iconos destacados -->
+    <script
+      src="https://kit.fontawesome.com/7e2e5e6e2a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Cargar noticias dinámicamente (igual que index.html, pero puedes personalizar la ruta si lo deseas)
+      document.addEventListener('DOMContentLoaded', async () => {
+        const contenedor = document.getElementById('noticias-section');
+        try {
+          const resp = await fetch('/backend/api/noticias');
+          const noticias = await resp.json();
+          if (!Array.isArray(noticias)) return;
+          noticias.forEach((noticia, i) => {
+            const card = document.createElement('div');
+            card.className =
+              'noticia-card ' +
+              (i % 2 === 0 ? 'left' : 'right') +
+              ' animate__animated ' +
+              (i % 2 === 0 ? 'animate__fadeInLeft' : 'animate__fadeInRight');
+            card.innerHTML = `
+              <img src="${noticia.imagen}" alt="${noticia.titulo}" />
+              <div class="noticia-text">
+                <h5>${noticia.titulo}</h5>
+                <p>${noticia.descripcion}</p>
+                <div class="fecha">${new Date(noticia.fecha).toLocaleDateString()}</div>
+              </div>
+            `;
+            contenedor.appendChild(card);
+          });
+        } catch (error) {
+          console.error('Error al cargar noticias:', error);
+        }
+      });
+    </script>
+  </body>
+</html>
